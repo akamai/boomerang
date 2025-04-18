@@ -734,6 +734,7 @@
 
       if (!impl.setVarsFromCookie()) {
         BOOMR.subscribe("page_ready", this.run, null, this);
+        BOOMR.subscribe("xhr_load", this.run, null, this);
       }
 
       impl.initialized = true;
