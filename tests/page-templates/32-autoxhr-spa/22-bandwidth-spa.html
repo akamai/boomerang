@@ -1,0 +1,26 @@
+<%= header %>
+<%= boomerangSnippet %>
+<button id="navigate">Navigate to New State</button>
+<script src="22-bandwidth-spa.js" type="text/javascript"></script>
+<script>
+BOOMR_test.init({
+  testAfterOnBeacon: true,
+  BW: {
+    base_url: window.location.protocol +  "//" + window.location.hostname + ":" + window.location.port + "/pages/34-bw/support/images/",
+    block_beacon: true
+  },
+  user_ip: "abc123",
+  History: {
+    enabled: true,  // wait for soft navs
+    auto: true
+  },
+  afterFirstBeacon: function() {
+    document.getElementById("navigate").addEventListener("click", function() {
+      // Simulate a route change
+      BOOMR_test.routeChangeRnd("newstate");
+    });
+  },
+  autorun: false  // wait for soft navs
+});
+</script>
+<%= footer %>
