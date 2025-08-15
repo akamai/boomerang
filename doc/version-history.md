@@ -1,5 +1,11 @@
 # Boomerang Release Notes
 
+## 1.815.1 (Aug 15, 2025)
+
+### Bug Fixes
+
+* `package.json`: Removes `postinstall` NPM step so `npm install boomerangjs` succeeds without dev dependencies
+
 ## 1.815.0 (Sep 30, 2024)
 
 ### New Features

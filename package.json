@@ -1,6 +1,6 @@
 {
   "name": "boomerangjs",
-  "version": "1.815.0",
+  "version": "1.815.1",
   "releaseVersion": "1",
   "description": "boomerang always comes back, except when it hits something",
   "main": "boomerang.js",
@@ -91,7 +91,7 @@
   },
   "scripts": {
     "test": "grunt test",
-    "postinstall": "npm run bower-install && npm run webdriver-manager-update",
+    "postinstall-dev": "npm run bower-install && npm run webdriver-manager-update",
     "build": "grunt clean build",
     "lint": "grunt lint",
     "unit-test": "grunt test:unit",
