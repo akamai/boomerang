@@ -1,0 +1,45 @@
+name: Run Boomerang Tests
+
+on:
+  push:
+    branches: [soasta]
+  pull_request:
+    branches: [soasta]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '12.x'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate environments.json (if needed)
+        run: |
+          echo '[
+            {"host":"c.go-mpulse.net","suffix":"prod","urls":"^//[a-z0-9]+\\.akstat\\.io/?$"},
+            {"host":"c-lt2.go-mpulse.net","suffix":"lt2","urls":"^//[a-z0-9]+\\.akstat\\.io/?$"},
+            {"host":"c-sqa.go-mpulse.net","suffix":"sqa","urls":"^//[a-z0-9]+\\.akstat\\.io/?$"},
+            {"host":"rum-dev-alma-dct-collector.soasta.com","suffix":"rum-dev-alma-dct","urls":"^//rum-dev-alma-dct-collector\\.soasta\\.com/?$"},
+            {"host":"rum-dev-alma-rtp-collector.soasta.com","suffix":"rum-dev-alma-rtp","urls":"^//rum-dev-alma-rtp-collector\\.soasta\\.com/?$"},
+            {"host":"rum-dev-alma-dswb-collector.soasta.com","suffix":"rum-dev-alma-dswb","urls":"^//rum-dev-alma-dswb-collector\\.soasta\\.com/?$"},
+            {"host":"rum-dev-alma-exp-collector.soasta.com","suffix":"rum-dev-alma-exp","urls":"^//rum-dev-alma-exp-collector\\.soasta\\.com/?$"},
+            {"host":"rum-dev-alma-ui-dev-collector.soasta.com","suffix":"rum-dev-alma-ui-dev","urls":"^//rum-dev-alma-ui-dev-collector\\.soasta\\.com/?$"},
+            {"host":"rum-dev-alma-ui-test-collector.soasta.com","suffix":"rum-dev-alma-ui-test","urls":"^//rum-dev-alma-ui-test-collector\\.soasta\\.com/?$"}
+          ]' > environments.json
+
+      - name: Run tests
+        run: grunt default --test-browser=ChromeHeadless --force
+
+      - name: Archive test results
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-results
+          path: tests/results/**
