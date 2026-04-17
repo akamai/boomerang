@@ -77,11 +77,11 @@
 </div>
 
 
-<div class="container" id="toc-content">
+<div class="container-fluid" id="toc-content">
 <div class="row">
 
 	
-	<div class="col-md-8">
+	<div class="col-md-8 col-md-offset-1">
 	
 		<div id="main">
 			
@@ -90,7 +90,7 @@
     
 
 
-    <h2>mPulse Boomerang 1.792.0</h2>
+    <h2>mPulse Boomerang 1.815.0</h2>
 
 
 
@@ -238,7 +238,7 @@ it). The general process is documented on in
 <p>For boomerang, the asynchronous loader snippet you'll use is:</p>
 <pre class="prettyprint source lang-javascript"><code>&lt;script>
 (function() {
-  // Boomerang Loader Snippet version 15
+  // Boomerang Loader Snippet version 16
   if (window.BOOMR && (window.BOOMR.version || window.BOOMR.snippetExecuted)) {
     return;
   }
@@ -246,7 +246,7 @@ it). The general process is documented on in
   window.BOOMR = window.BOOMR || {};
   window.BOOMR.snippetStart = new Date().getTime();
   window.BOOMR.snippetExecuted = true;
-  window.BOOMR.snippetVersion = 15;
+  window.BOOMR.snippetVersion = 16;
 
   // NOTE: Set Boomerang URL here
   window.BOOMR.url = &quot;&quot;;
@@ -258,7 +258,7 @@ it). The general process is documented on in
       // Whether or not Preload method has worked
       promoted = false,
       // How long to wait for Preload to work before falling back to iframe method
-      LOADER_TIMEOUT = 3000;
+      LOADER_TIMEOUT = window.BOOMR_loader_timeout || 3000;
 
   // Tells the browser to execute the Preloaded script by adding it to the DOM
   function promote() {
@@ -330,6 +330,9 @@ it). The general process is documented on in
     // Ensure we're not loaded lazily
     iframe.loading = &quot;eager&quot;;
 
+    // Add an ID to be clear
+    iframe.id = &quot;boomr-if&quot;;
+
     // Hide the iframe
     iframeStyle = (iframe.frameElement || iframe).style;
     iframeStyle.width = 0;
@@ -337,8 +340,9 @@ it). The general process is documented on in
     iframeStyle.border = 0;
     iframeStyle.display = &quot;none&quot;;
 
-    // Append to the end of the current block
-    parentNode.appendChild(iframe);
+    // Append to the end of the current block, preferring the document body to avoid potential SEO
+    // issues with adding an IFRAME to the head.
+    (doc.body || parentNode).appendChild(iframe);
 
     // Try to get the iframe's document object
     try {
@@ -389,8 +393,8 @@ it). The general process is documented on in
 
     // Set attributes to trigger a Preload
     link.href = window.BOOMR.url;
-    link.rel  = &quot;preload&quot;;
-    link.as   = &quot;script&quot;;
+    link.rel = &quot;preload&quot;;
+    link.as = &quot;script&quot;;
 
     // Add our script tag if successful, fallback to iframe if not
     link.addEventListener(&quot;load&quot;, promote);
@@ -431,7 +435,7 @@ it). The general process is documented on in
 &lt;/script>
 </code></pre>
 <p>Minified:</p>
-<pre class="prettyprint source lang-javascript"><code>&lt;script>(function(){if(window.BOOMR&&(window.BOOMR.version||window.BOOMR.snippetExecuted)){return}window.BOOMR=window.BOOMR||{};window.BOOMR.snippetStart=(new Date).getTime();window.BOOMR.snippetExecuted=true;window.BOOMR.snippetVersion=15;window.BOOMR.url=&quot;&quot;;var e=document.currentScript||document.getElementsByTagName(&quot;script&quot;)[0],a=e.parentNode,s=false,t=3e3;function n(){if(s){return}var e=document.createElement(&quot;script&quot;);e.id=&quot;boomr-scr-as&quot;;e.src=window.BOOMR.url;e.async=true;a.appendChild(e);s=true}function i(e){s=true;var t,i=document,n,o,d,r=window;window.BOOMR.snippetMethod=e?&quot;if&quot;:&quot;i&quot;;n=function(e,t){var n=i.createElement(&quot;script&quot;);n.id=t||&quot;boomr-if-as&quot;;n.src=window.BOOMR.url;BOOMR_lstart=(new Date).getTime();e=e||i.body;e.appendChild(n)};if(!window.addEventListener&&window.attachEvent&&navigator.userAgent.match(/MSIE [678]\./)){window.BOOMR.snippetMethod=&quot;s&quot;;n(a,&quot;boomr-async&quot;);return}o=document.createElement(&quot;IFRAME&quot;);o.src=&quot;about:blank&quot;;o.title=&quot;&quot;;o.role=&quot;presentation&quot;;o.loading=&quot;eager&quot;;d=(o.frameElement||o).style;d.width=0;d.height=0;d.border=0;d.display=&quot;none&quot;;a.appendChild(o);try{r=o.contentWindow;i=r.document.open()}catch(e){t=document.domain;o.src=&quot;javascript:var d=document.open();d.domain='&quot;+t+&quot;';void 0;&quot;;r=o.contentWindow;i=r.document.open()}r._boomrl=function(){n()};if(r.addEventListener){r.addEventListener(&quot;load&quot;,r._boomrl,false)}else if(r.attachEvent){r.attachEvent(&quot;onload&quot;,r._boomrl)}i.close()}var o=document.createElement(&quot;link&quot;);if(o.relList&&typeof o.relList.supports===&quot;function&quot;&&o.relList.supports(&quot;preload&quot;)&&&quot;as&quot;in o){window.BOOMR.snippetMethod=&quot;p&quot;;o.href=window.BOOMR.url;o.rel=&quot;preload&quot;;o.as=&quot;script&quot;;o.addEventListener(&quot;load&quot;,n);o.addEventListener(&quot;error&quot;,function(){i(true)});setTimeout(function(){if(!s){i(true)}},t);BOOMR_lstart=(new Date).getTime();a.appendChild(o)}else{i(false)}function d(e){window.BOOMR_onload=e&&e.timeStamp||(new Date).getTime()}if(window.addEventListener){window.addEventListener(&quot;load&quot;,d,false)}else if(window.attachEvent){window.attachEvent(&quot;onload&quot;,d)}})();&lt;/script>
+<pre class="prettyprint source lang-javascript"><code>&lt;script>(function(){if(window.BOOMR&&(window.BOOMR.version||window.BOOMR.snippetExecuted)){return}window.BOOMR=window.BOOMR||{};window.BOOMR.snippetStart=(new Date).getTime();window.BOOMR.snippetExecuted=true;window.BOOMR.snippetVersion=16;window.BOOMR.url=&quot;&quot;;var e=document.currentScript||document.getElementsByTagName(&quot;script&quot;)[0],a=e.parentNode,s=false,t=window.BOOMR_loader_timeout||3e3;function n(){if(s){return}var e=document.createElement(&quot;script&quot;);e.id=&quot;boomr-scr-as&quot;;e.src=window.BOOMR.url;e.async=true;a.appendChild(e);s=true}function o(e){s=true;var t,o=document,n,i,d,r=window;window.BOOMR.snippetMethod=e?&quot;if&quot;:&quot;i&quot;;n=function(e,t){var n=o.createElement(&quot;script&quot;);n.id=t||&quot;boomr-if-as&quot;;n.src=window.BOOMR.url;BOOMR_lstart=(new Date).getTime();e=e||o.body;e.appendChild(n)};if(!window.addEventListener&&window.attachEvent&&navigator.userAgent.match(/MSIE [678]\./)){window.BOOMR.snippetMethod=&quot;s&quot;;n(a,&quot;boomr-async&quot;);return}i=document.createElement(&quot;IFRAME&quot;);i.src=&quot;about:blank&quot;;i.title=&quot;&quot;;i.role=&quot;presentation&quot;;i.loading=&quot;eager&quot;;i.id=&quot;boomr-if&quot;;d=(i.frameElement||i).style;d.width=0;d.height=0;d.border=0;d.display=&quot;none&quot;;(o.body||a).appendChild(i);try{r=i.contentWindow;o=r.document.open()}catch(e){t=document.domain;i.src=&quot;javascript:var d=document.open();d.domain='&quot;+t+&quot;';void 0;&quot;;r=i.contentWindow;o=r.document.open()}r._boomrl=function(){n()};if(r.addEventListener){r.addEventListener(&quot;load&quot;,r._boomrl,false)}else if(r.attachEvent){r.attachEvent(&quot;onload&quot;,r._boomrl)}o.close()}var i=document.createElement(&quot;link&quot;);if(i.relList&&typeof i.relList.supports===&quot;function&quot;&&i.relList.supports(&quot;preload&quot;)&&&quot;as&quot;in i){window.BOOMR.snippetMethod=&quot;p&quot;;i.href=window.BOOMR.url;i.rel=&quot;preload&quot;;i.as=&quot;script&quot;;i.addEventListener(&quot;load&quot;,n);i.addEventListener(&quot;error&quot;,function(){o(true)});setTimeout(function(){if(!s){o(true)}},t);BOOMR_lstart=(new Date).getTime();a.appendChild(i)}else{o(false)}function d(e){window.BOOMR_onload=e&&e.timeStamp||(new Date).getTime()}if(window.addEventListener){window.addEventListener(&quot;load&quot;,d,false)}else if(window.attachEvent){window.attachEvent(&quot;onload&quot;,d)}})();&lt;/script>
 </code></pre>
 <p>Change the <code>boomerangUrl</code> to the location of Boomerang on your server.</p>
 <p>The <code>id</code> of the script node created by this code MUST be <code>boomr-if-as</code> (for IFRAME mode) or <code>boomr-scr-as</code> (for
@@ -493,7 +497,7 @@ written in Markdown and is built via <a href="http://usejsdoc.org/">JSDoc</a>.</
 <a href="https://akamai.github.io/boomerang/">akamai.github.io/boomerang/</a>.</p>
 <p>The team at Akamai works on mPulse Boomerang, which contains a few mPulse-specific plugins and may have additional
 changes being tested before being backported to the open-source Boomerang.  mPulse Boomerang usage documentation is
-available at <a href="https://docs.soasta.com/boomerang/">docs.soasta.com/boomerang/</a> and mPulse Boomerang API documentation
+available at <a href="https://akamai.github.io/boomerang/akamai/">akamai.github.io/boomerang/akamai/</a> and mPulse Boomerang API documentation
 is at <a href="https://developer.akamai.com/tools/boomerang/docs/">developer.akamai.com/tools/boomerang/docs/</a>.</p>
 <p>Additional documentation:</p>
 <ul>
@@ -549,8 +553,8 @@ awesome community of open-source developers that use and hack it.  That's you.  
 	<div class="clearfix"></div>
 
 	
-		<div class="col-md-3">
-			<div id="toc" class="col-md-3 hidden-xs hidden-sm hidden-md"></div>
+		<div class="col-md-2 col-md-offset-1">
+			<div id="toc" class="col-md-4 col-lg-2 hidden-xs hidden-sm hidden-md"></div>
 		</div>
 	
 
@@ -582,9 +586,9 @@ awesome community of open-source developers that use and hack it.  That's you.  
 	</span>
 
 <span class="jsdoc-message">
-	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.6</a>
+	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.11</a>
 	
-		on Tue Feb 6th 2024
+		on Thu Apr 16th 2026
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>

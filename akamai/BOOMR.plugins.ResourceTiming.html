@@ -77,11 +77,11 @@
 </div>
 
 
-<div class="container" id="toc-content">
+<div class="container-fluid" id="toc-content">
 <div class="row">
 
 	
-	<div class="col-md-8">
+	<div class="col-md-8 col-md-offset-1">
 	
 		<div id="main">
 			
@@ -123,12 +123,16 @@ API.</p>
 <p>This plugin adds the following parameters to the beacon for Page Loads:</p>
 <ul>
 <li><code>restiming</code>: Compressed ResourceTiming data</li>
+<li><code>servertiming</code>: Compressed ServerTiming data</li>
+<li><code>restiming.ct</code>: contentType map</li>
+<li><code>restiming.dt</code>: deliveryType map</li>
+<li><code>restiming.nhp</code>: nextHopProtocol map</li>
 </ul>
 <p>The ResourceTiming plugin adds an object named <code>restiming</code> to the beacon data.</p>
 <p><code>restiming</code> is an optimized <a href="http://en.wikipedia.org/wiki/Trie">Trie</a> structure,
 where the keys are the ResourceTiming URLs, and the values correspond to those URLs'
 <a href="http://www.w3.org/TR/resource-timing/#performanceresourcetiming">PerformanceResourceTiming</a>
-timestamps:</p>
+timestamps (and additional details):</p>
 <pre><code>{ &quot;[url]&quot;: &quot;[data]&quot;}
 </code></pre>
 <p>The Trie structure is used to minimize the data transmitted from the ResourceTimings.</p>
@@ -161,11 +165,11 @@ the Trie.</p>
 separated by a pipe symbol (<code>|</code>) in the <code>data</code>. In Example 1 above, <code>foo.png</code>
 has been downloaded twice, so it is listed with two separate page loads, <code>1c,3</code> and <code>1d,a</code>.</p>
 <p>The value of each key is a string, which contains the following components:</p>
-<pre><code>data = &quot;[initiatorType][timings]&quot;
+<pre><code>data = &quot;[initiatorType][timings]*[special1]*[special2]&quot;
 </code></pre>
 <p><code>initiatorType</code> is a simple map from the PerformanceResourceTiming
 <code>initiatorType</code> (which is a string) to an integer, according to the
-<code>BOOMR.plugins.ResourceTiming.INITAITOR_TYPES</code> enum.</p>
+<a href="BOOMR.plugins.ResourceTiming.html#.INITIATOR_TYPES"><code>BOOMR.plugins.ResourceTiming.INITIATOR_TYPES</code></a> enum.</p>
 <p><code>timings</code> is a string of <a href="http://en.wikipedia.org/wiki/Base_36">Base-36</a>
 encoded timestamps from the PerformanceResourceTiming interface. The values in
 the string are separated by commas:</p>
@@ -209,6 +213,10 @@ We find it was downloaded twice <code>&quot;1c,3|1d,a&quot;</code>:</p>
 </ul>
 </li>
 </ul>
+<p>Additional special data may be appended to the end of the timings data, depending on browser
+support and whether it was same- or cross-origin.</p>
+<p>See https://github.com/nicjansma/resourcetiming-compression.js for more details on each special
+data type.</p>
     </div>
     
 
@@ -299,11 +307,16 @@ We find it was downloaded twice <code>&quot;1c,3|1d,a&quot;</code>:</p>
                 
 <hr>
 <dt class="name" id=".INITIATOR_TYPES">
-    <h3 class="member-name" id=".INITIATOR_TYPES">INITIATOR_TYPES<span class="type-signature"> :number</span></h3>
+    <h3 class="member-name" id=".INITIATOR_TYPES">INITIATOR_TYPES<span class="type-signature"> :string</span></h3>
 
     
 </dt>
 <dd>
+    
+    <div class="description">
+        <p>Initiator type mapping.</p>
+<p>If no match, the initiatorType 'other' will be chosen</p>
+    </div>
     
 
     
@@ -311,7 +324,7 @@ We find it was downloaded twice <code>&quot;1c,3|1d,a&quot;</code>:</p>
         <ul>
             <li>
                 
-<span class="param-type">number</span>
+<span class="param-type">string</span>
 
 
 
@@ -357,7 +370,7 @@ We find it was downloaded twice <code>&quot;1c,3|1d,a&quot;</code>:</p>
             <td class="type">
             
                 
-<span class="param-type">number</span>
+<span class="param-type">string</span>
 
 
 
@@ -387,7 +400,7 @@ We find it was downloaded twice <code>&quot;1c,3|1d,a&quot;</code>:</p>
             <td class="type">
             
                 
-<span class="param-type">number</span>
+<span class="param-type">string</span>
 
 
 
@@ -417,7 +430,7 @@ We find it was downloaded twice <code>&quot;1c,3|1d,a&quot;</code>:</p>
             <td class="type">
             
                 
-<span class="param-type">number</span>
+<span class="param-type">string</span>
 
 
 
@@ -447,7 +460,7 @@ We find it was downloaded twice <code>&quot;1c,3|1d,a&quot;</code>:</p>
             <td class="type">
             
                 
-<span class="param-type">number</span>
+<span class="param-type">string</span>
 
 
 
@@ -477,7 +490,7 @@ We find it was downloaded twice <code>&quot;1c,3|1d,a&quot;</code>:</p>
             <td class="type">
             
                 
-<span class="param-type">number</span>
+<span class="param-type">string</span>
 
 
 
@@ -507,7 +520,7 @@ We find it was downloaded twice <code>&quot;1c,3|1d,a&quot;</code>:</p>
             <td class="type">
             
                 
-<span class="param-type">number</span>
+<span class="param-type">string</span>
 
 
 
@@ -537,7 +550,7 @@ We find it was downloaded twice <code>&quot;1c,3|1d,a&quot;</code>:</p>
             <td class="type">
             
                 
-<span class="param-type">number</span>
+<span class="param-type">string</span>
 
 
 
@@ -567,7 +580,7 @@ We find it was downloaded twice <code>&quot;1c,3|1d,a&quot;</code>:</p>
             <td class="type">
             
                 
-<span class="param-type">number</span>
+<span class="param-type">string</span>
 
 
 
@@ -597,7 +610,7 @@ We find it was downloaded twice <code>&quot;1c,3|1d,a&quot;</code>:</p>
             <td class="type">
             
                 
-<span class="param-type">number</span>
+<span class="param-type">string</span>
 
 
 
@@ -627,7 +640,7 @@ We find it was downloaded twice <code>&quot;1c,3|1d,a&quot;</code>:</p>
             <td class="type">
             
                 
-<span class="param-type">number</span>
+<span class="param-type">string</span>
 
 
 
@@ -657,7 +670,7 @@ We find it was downloaded twice <code>&quot;1c,3|1d,a&quot;</code>:</p>
             <td class="type">
             
                 
-<span class="param-type">number</span>
+<span class="param-type">string</span>
 
 
 
@@ -687,7 +700,7 @@ We find it was downloaded twice <code>&quot;1c,3|1d,a&quot;</code>:</p>
             <td class="type">
             
                 
-<span class="param-type">number</span>
+<span class="param-type">string</span>
 
 
 
@@ -717,7 +730,7 @@ We find it was downloaded twice <code>&quot;1c,3|1d,a&quot;</code>:</p>
             <td class="type">
             
                 
-<span class="param-type">number</span>
+<span class="param-type">string</span>
 
 
 
@@ -747,7 +760,7 @@ We find it was downloaded twice <code>&quot;1c,3|1d,a&quot;</code>:</p>
             <td class="type">
             
                 
-<span class="param-type">number</span>
+<span class="param-type">string</span>
 
 
 
@@ -777,7 +790,7 @@ We find it was downloaded twice <code>&quot;1c,3|1d,a&quot;</code>:</p>
             <td class="type">
             
                 
-<span class="param-type">number</span>
+<span class="param-type">string</span>
 
 
 
@@ -807,7 +820,7 @@ We find it was downloaded twice <code>&quot;1c,3|1d,a&quot;</code>:</p>
             <td class="type">
             
                 
-<span class="param-type">number</span>
+<span class="param-type">string</span>
 
 
 
@@ -837,7 +850,7 @@ We find it was downloaded twice <code>&quot;1c,3|1d,a&quot;</code>:</p>
             <td class="type">
             
                 
-<span class="param-type">number</span>
+<span class="param-type">string</span>
 
 
 
@@ -867,7 +880,7 @@ We find it was downloaded twice <code>&quot;1c,3|1d,a&quot;</code>:</p>
             <td class="type">
             
                 
-<span class="param-type">number</span>
+<span class="param-type">string</span>
 
 
 
@@ -897,7 +910,7 @@ We find it was downloaded twice <code>&quot;1c,3|1d,a&quot;</code>:</p>
             <td class="type">
             
                 
-<span class="param-type">number</span>
+<span class="param-type">string</span>
 
 
 
@@ -927,7 +940,7 @@ We find it was downloaded twice <code>&quot;1c,3|1d,a&quot;</code>:</p>
             <td class="type">
             
                 
-<span class="param-type">number</span>
+<span class="param-type">string</span>
 
 
 
@@ -957,7 +970,7 @@ We find it was downloaded twice <code>&quot;1c,3|1d,a&quot;</code>:</p>
             <td class="type">
             
                 
-<span class="param-type">number</span>
+<span class="param-type">string</span>
 
 
 
@@ -987,7 +1000,7 @@ We find it was downloaded twice <code>&quot;1c,3|1d,a&quot;</code>:</p>
             <td class="type">
             
                 
-<span class="param-type">number</span>
+<span class="param-type">string</span>
 
 
 
@@ -1017,7 +1030,7 @@ We find it was downloaded twice <code>&quot;1c,3|1d,a&quot;</code>:</p>
             <td class="type">
             
                 
-<span class="param-type">number</span>
+<span class="param-type">string</span>
 
 
 
@@ -1047,7 +1060,7 @@ We find it was downloaded twice <code>&quot;1c,3|1d,a&quot;</code>:</p>
             <td class="type">
             
                 
-<span class="param-type">number</span>
+<span class="param-type">string</span>
 
 
 
@@ -1077,7 +1090,7 @@ We find it was downloaded twice <code>&quot;1c,3|1d,a&quot;</code>:</p>
             <td class="type">
             
                 
-<span class="param-type">number</span>
+<span class="param-type">string</span>
 
 
 
@@ -1107,7 +1120,7 @@ We find it was downloaded twice <code>&quot;1c,3|1d,a&quot;</code>:</p>
             <td class="type">
             
                 
-<span class="param-type">number</span>
+<span class="param-type">string</span>
 
 
 
@@ -1354,6 +1367,64 @@ ResourceTiming.</p>
 </table>
 </dl>
 
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id=".RT_FIELDS_TIMESTAMPS">
+    <h3 class="member-name" id=".RT_FIELDS_TIMESTAMPS">RT_FIELDS_TIMESTAMPS<span class="type-signature"></span></h3>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>ResourceTiming timestamp fields, in order.</p>
+    </div>
+    
+
+    
+
+    
+<dl class="details">
     
 
 	
@@ -2293,6 +2364,8 @@ the optimized server timing lookup</p>
         
 
         
+        <th>Default</th>
+        
 
         <th class="last">Description</th>
     </tr>
@@ -2303,7 +2376,7 @@ the optimized server timing lookup</p>
 
         <tr>
             
-                <td class="name"><code>ResourceTiming.xssBreakWorks</code></td>
+                <td class="name"><code>ResourceTiming.xssBreakWords</code></td>
             
 
             <td class="type">
@@ -2328,6 +2401,12 @@ the optimized server timing lookup</p>
                 </td>
             
 
+            
+                <td class="default">
+                
+                    ["href", "src", "action"]
+                
+                </td>
             
 
             <td class="description last"><p>Words that will be broken (by
@@ -2366,6 +2445,12 @@ to ensure NoScript doesn't think this is an XSS attack.</p>
             
 
             
+                <td class="default">
+                
+                    false
+                
+                </td>
+            
 
             <td class="description last"><p>Whether or not to clear ResourceTiming
 data on each beacon.</p></td>
@@ -2401,8 +2486,14 @@ data on each beacon.</p></td>
             
 
             
+                <td class="default">
+                
+                    500
+                
+                </td>
+            
 
-            <td class="description last"><p>URL length limit, after which <code>...</code> will be used</p></td>
+            <td class="description last"><p>URL length limit, after which <code>...</code> will be used.</p></td>
         </tr>
 
     
@@ -2438,9 +2529,99 @@ data on each beacon.</p></td>
             
 
             
+                <td class="default">
+                
+                    []
+                
+                </td>
+            
 
             <td class="description last"><p>List of strings of RegExps
 to trim from URLs.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>ResourceTiming.trackedResourceTypes</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;string></span>
+|
+
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    *
+                
+                </td>
+            
+
+            <td class="description last"><p>Array of resource types to track,
+or '*' for all.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>ResourceTiming.serverTiming</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    true
+                
+                </td>
+            
+
+            <td class="description last"><p>Whether or not to gather ServerTiming.</p></td>
         </tr>
 
     
@@ -2472,6 +2653,12 @@ to trim from URLs.</p></td>
                 </td>
             
 
+            
+                <td class="default">
+                
+                    false
+                
+                </td>
             
 
             <td class="description last"><p>Whether or not to instrument
@@ -2508,6 +2695,12 @@ to trim from URLs.</p></td>
             
 
             
+                <td class="default">
+                
+                    false
+                
+                </td>
+            
 
             <td class="description last"><p>Whether or not to split the ResourceTiming
 compressed Trie at the path separator (faster processing, but larger result).</p></td>
@@ -2543,9 +2736,55 @@ compressed Trie at the path separator (faster processing, but larger result).</p
             
 
             
+                <td class="default">
+                
+                    false
+                
+                </td>
+            
 
             <td class="description last"><p>Whether or not to collect physical
-dimensions of srcset images. Setting this will cause uncacheable images to be re-downloaded.</p></td>
+dimensions of srcset images. Setting this will cause un-cacheable images to be re-downloaded.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>ResourceTiming.jsUrl</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    false
+                
+                </td>
+            
+
+            <td class="description last"><p>Whether or not to encode as JSURL</p></td>
         </tr>
 
     
@@ -2933,8 +3172,8 @@ dimensions of srcset images. Setting this will cause uncacheable images to be re
 	<div class="clearfix"></div>
 
 	
-		<div class="col-md-3">
-			<div id="toc" class="col-md-3 hidden-xs hidden-sm hidden-md"></div>
+		<div class="col-md-2 col-md-offset-1">
+			<div id="toc" class="col-md-4 col-lg-2 hidden-xs hidden-sm hidden-md"></div>
 		</div>
 	
 
@@ -2966,9 +3205,9 @@ dimensions of srcset images. Setting this will cause uncacheable images to be re
 	</span>
 
 <span class="jsdoc-message">
-	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.6</a>
+	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.11</a>
 	
-		on Tue Feb 6th 2024
+		on Thu Apr 16th 2026
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>

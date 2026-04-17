@@ -77,11 +77,11 @@
 </div>
 
 
-<div class="container" id="toc-content">
+<div class="container-fluid" id="toc-content">
 <div class="row">
 
 	
-	<div class="col-md-8">
+	<div class="col-md-8 col-md-offset-1">
 	
 		<div id="main">
 			
@@ -494,7 +494,7 @@ encoded JSON object.</p>
 </li>
 <li><code>t</code>: Type (e.g. <code>SyntaxError</code> or <code>ReferenceError</code>)</li>
 <li><code>c</code>: Code (for network errors)</li>
-<li><code>m</code>: Error messag</li>
+<li><code>m</code>: Error message</li>
 <li><code>x</code>: Extra data</li>
 <li><code>d</code>: Timestamp (base 36)</li>
 </ul>
@@ -663,6 +663,8 @@ encoded JSON object.</p>
         
 
         
+        <th>Default</th>
+        
 
         <th class="last">Description</th>
     </tr>
@@ -699,6 +701,12 @@ encoded JSON object.</p>
             
 
             
+                <td class="default">
+                
+                    null
+                
+                </td>
+            
 
             <td class="description last"><p>Callback to fire when
 an error occurs</p></td>
@@ -734,6 +742,12 @@ an error occurs</p></td>
             
 
             
+                <td class="default">
+                
+                    true
+                
+                </td>
+            
 
             <td class="description last"><p>Monitor <code>window.onerror</code></p></td>
         </tr>
@@ -767,6 +781,12 @@ an error occurs</p></td>
                 </td>
             
 
+            
+                <td class="default">
+                
+                    true
+                
+                </td>
             
 
             <td class="description last"><p>Monitor XHR errors</p></td>
@@ -802,6 +822,12 @@ an error occurs</p></td>
             
 
             
+                <td class="default">
+                
+                    true
+                
+                </td>
+            
 
             <td class="description last"><p>Monitor <code>console.error</code></p></td>
         </tr>
@@ -835,6 +861,12 @@ an error occurs</p></td>
                 </td>
             
 
+            
+                <td class="default">
+                
+                    false
+                
+                </td>
             
 
             <td class="description last"><p>Monitor event callbacks
@@ -872,8 +904,14 @@ Verifications should be run before enabling in production.</p></td>
             
 
             
+                <td class="default">
+                
+                    false
+                
+                </td>
+            
 
-            <td class="description last"><p>Monitor <code>setTimout</code>
+            <td class="description last"><p>Monitor <code>setTimeout</code>
 and <code>setInterval</code>. NOTE: Enabling this may cause compatibility issues with certain sites.
 Verifications should be run before enabling in production.</p></td>
         </tr>
@@ -907,6 +945,12 @@ Verifications should be run before enabling in production.</p></td>
                 </td>
             
 
+            
+                <td class="default">
+                
+                    false
+                
+                </td>
             
 
             <td class="description last"><p>Monitor unhandled
@@ -943,6 +987,12 @@ promise rejections.</p></td>
             
 
             
+                <td class="default">
+                
+                    false
+                
+                </td>
+            
 
             <td class="description last"><p>Monitor Reporting API
 warnings.</p></td>
@@ -977,6 +1027,12 @@ warnings.</p></td>
                 </td>
             
 
+            
+                <td class="default">
+                
+                    false
+                
+                </td>
             
 
             <td class="description last"><p>Whether or not to
@@ -1014,6 +1070,12 @@ that happened up to the page load beacon will be captured.</p></td>
             
 
             
+                <td class="default">
+                
+                    1000
+                
+                </td>
+            
 
             <td class="description last"><p>If <code>sendAfterOnload</code> is
 true, how often to send the latest batch of errors.</p></td>
@@ -1049,8 +1111,15 @@ true, how often to send the latest batch of errors.</p></td>
             
 
             
+                <td class="default">
+                
+                    2500
+                
+                </td>
+            
 
-            <td class="description last"><p>How often to send a beacon during onload if autorun=false</p></td>
+            <td class="description last"><p>How often to send a beacon during
+onload if autorun=false</p></td>
         </tr>
 
     
@@ -1082,6 +1151,12 @@ true, how often to send the latest batch of errors.</p></td>
                 </td>
             
 
+            
+                <td class="default">
+                
+                    10
+                
+                </td>
             
 
             <td class="description last"><p>Maximum number of errors
@@ -1879,8 +1954,8 @@ automatically report exceptions.</p>
 	<div class="clearfix"></div>
 
 	
-		<div class="col-md-3">
-			<div id="toc" class="col-md-3 hidden-xs hidden-sm hidden-md"></div>
+		<div class="col-md-2 col-md-offset-1">
+			<div id="toc" class="col-md-4 col-lg-2 hidden-xs hidden-sm hidden-md"></div>
 		</div>
 	
 
@@ -1912,9 +1987,9 @@ automatically report exceptions.</p>
 	</span>
 
 <span class="jsdoc-message">
-	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.6</a>
+	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.11</a>
 	
-		on Tue Feb 6th 2024
+		on Thu Apr 16th 2026
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>

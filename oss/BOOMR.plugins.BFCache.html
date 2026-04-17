@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-	<title>mPulse Boomerang Class: GUID</title>
+	<title>mPulse Boomerang Class: BFCache</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -95,7 +95,7 @@
             <h1>
                 <span class="ancestors"><a href="BOOMR.html">BOOMR</a><a href="BOOMR.plugins.html">.plugins</a>.</span>
             
-            GUID
+            BFCache
             </h1>
             
         
@@ -116,13 +116,25 @@
 
     
     <div class="description">
-        <p>Tag users with a unique GUID.</p>
-<p>The <code>GUID</code> plugin adds a tracking cookie to the user that will be sent to the
-beacon-server as cookie.</p>
-<p>For information on how to include this plugin, see the <a href="tutorial-building.html">Building</a> tutorial.</p>
+        <p>Tracks Back-Forward Cache (BFCache) Navigations.</p>
+<p>This plugin will send a &quot;BFCache&quot; beacon every time a BFCache navigation occurs, and will
+include the &quot;Not Restored Reasons&quot; when a Back-Forward navigation wasn't a BFCache navigation.</p>
 <h2>Beacon Parameters</h2>
-<p>This plugin adds no parameters to the beacon.</p>
-<p>(It sets the specified cookie)</p>
+<p>This plugin adds the following parameters to the beacon:</p>
+<ul>
+<li><code>http.initiator=bfcache</code>: Designates this beacon as a BFCache navigation</li>
+<li><code>rt.start=manual</code>: Since this is a non-Page Load beacon</li>
+<li><code>t_done</code>: (Page Load Time) Set to the duration of the <code>pageshow</code> event</li>
+<li><code>t_page</code>: (Front End Time) Matches <code>t_done</code> and is set to the duration of the <code>pageshow</code> event</li>
+<li><code>t_resp</code>: (Back End Time) Set to 0</li>
+<li><code>rt.tstart</code>: (Event start) Set to the timestamp of the <code>pageshow</code> event</li>
+<li><code>rt.end</code>: (Event end) Set to the timestamp when the <code>pageshow</code> event fired</li>
+<li><code>nt_nav_type</code>: Set to Back-Forward Navigation (<code>2</code>)</li>
+<li><code>pt.fcp</code>: First Contentful Paint (from two <code>requestAnimationFrame</code>s)</li>
+<li><code>pt.lcp</code>: Largest Contentful Paint (from two <code>requestAnimationFrame</code>s)</li>
+<li><code>bfc.nrr</code>: BFCache &quot;Not Restored Reasons&quot; (list of strings) if BFCache
+wasn't possible (for regular Back-Forward navigations)</li>
+</ul>
     </div>
     
 
@@ -300,47 +312,7 @@ beacon-server as cookie.</p>
 
         <tr>
             
-                <td class="name"><code>GUID.cookieName</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                    "GUID"
-                
-                </td>
-            
-
-            <td class="description last"><p>The name of the cookie to be set in the browser session</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>GUID.expires</code></td>
+                <td class="name"><code>minimumDwellTime</code></td>
             
 
             <td class="type">
@@ -368,12 +340,12 @@ beacon-server as cookie.</p>
             
                 <td class="default">
                 
-                    604800
+                    500
                 
                 </td>
             
 
-            <td class="description last"><p>An expiry time for the cookie in seconds. By default 7 days.</p></td>
+            <td class="description last"><p>Minimum dwell time before a beacon is sent (ms)</p></td>
         </tr>
 
     
@@ -443,7 +415,7 @@ beacon-server as cookie.</p>
         
                 
 <div class="param-desc">
-    <p><a href="BOOMR.plugins.GUID.html"><code>BOOMR.plugins.GUID</code></a> The GUID plugin for chaining</p>
+    <p><a href="BOOMR.plugins.BFCache.html"><code>BOOMR.plugins.BFCache</code></a> The BFCache plugin for chaining</p>
 </div>
 
 
@@ -540,6 +512,102 @@ beacon-server as cookie.</p>
 
 <div class="param-desc">
     <p><code>true</code></p>
+</div>
+
+
+            
+    </div>
+    
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt>
+    
+        <h3 class="method-name" class="name" id=".notRestoredReasons">notRestoredReasons()</h3>
+    
+
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Gets the page's Not Restored Reasons (if any), joined by a comma</p>
+    </div>
+    
+
+    
+
+    
+
+    
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h4>Returns:</h4>
+    <div class="method-returns">
+        
+                
+    <p>Type: 
+<span class="param-type">string</span>
+
+
+</p>
+
+<div class="param-desc">
+    <p>String of Not Restored Reasons</p>
 </div>
 
 

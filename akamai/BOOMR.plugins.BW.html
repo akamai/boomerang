@@ -77,11 +77,11 @@
 </div>
 
 
-<div class="container" id="toc-content">
+<div class="container-fluid" id="toc-content">
 <div class="row">
 
 	
-	<div class="col-md-8">
+	<div class="col-md-8 col-md-offset-1">
 	
 		<div id="main">
 			
@@ -142,7 +142,7 @@ to wait for the test to complete before sending the beacon.</p>
 <p>If you do not turn on the <a href="BOOMR.plugins.BW.html#.init"><code>BW.block_beacon</code></a> option,
 you will only receive bandwidth results if they were cached in a cookie by a
 previous test run.</p>
-<h2>IPv4 optimisations</h2>
+<h2>IPv4 optimizations</h2>
 <p>While visitor's IP address information isn't available to JavaScript, if your server
 can communicate the IP address to JavaScript (e.g. via HTML injection), Boomerang
 will use it to detect if the visitor has changed networks.  See
@@ -155,7 +155,7 @@ but they stay within the same subnet.</p>
 <h2>Cookie</h2>
 <p>The bandwidth results are stored within a cookie.  This helps ensure the bandwidth
 test isn't repeated for the same user repeatedly (slowing down their experience).</p>
-<p>You can customise the name of the cookie where the bandwidth will be stored via
+<p>You can customize the name of the cookie where the bandwidth will be stored via
 the <a href="BOOMR.plugins.BW.html#.init"><code>BW.cookie</code></a> option.</p>
 <p>By default this is set to <code>BA</code>.</p>
 <p>This cookie is set to expire in 7 days. You can change its lifetime using
@@ -176,11 +176,11 @@ side. Its format is as follows:</p>
 <h2>Disabling the bandwidth check</h2>
 <p>Finally, there may be cases when you want to completely disable the bandwidth test --
 perhaps you know that your user is on a slow network, or pays by the byte (the
-andwidth test uses a lot of bandwidth), or is on a mobile device that cannot
+bandwidth test uses a lot of bandwidth), or is on a mobile device that cannot
 handle the load.</p>
 <p>In such cases you have two options:</p>
 <ul>
-<li>Delete the bandwdith plugin (<code>delete BOOMR.plugins.BW</code>)</li>
+<li>Delete the bandwidth plugin (<code>delete BOOMR.plugins.BW</code>)</li>
 <li>Set the <a href="BOOMR.plugins.BW.html#.init"><code>BW.enabled</code></a> parameter to <code>false</code></li>
 </ul>
 <h2>Methodology</h2>
@@ -196,7 +196,7 @@ response).  This gives us a good idea of how much time it takes to
 make a HTTP request from the browser to our server.</li>
 <li>Once done, we calculate the arithmetic mean, standard deviation and standard
 error at 95% confidence for the 9 download times that we have.  This is
-the latency number (<code>lat</code>) and confidence intervl (<code>lat_err</code>) that we
+the latency number (<code>lat</code>) and confidence interval (<code>lat_err</code>) that we
 beacon back to our server.</li>
 </ul>
 </li>
@@ -472,6 +472,8 @@ and latency from values that it has already gathered.</p>
         
 
         
+        <th>Default</th>
+        
 
         <th class="last">Description</th>
     </tr>
@@ -508,6 +510,12 @@ and latency from values that it has already gathered.</p>
             
 
             
+                <td class="default">
+                
+                    ""
+                
+                </td>
+            
 
             <td class="description last"><p>By default, this is set to the empty string,
 which has the effect of disabling the bandwidth plugin. Set the
@@ -529,7 +537,7 @@ in and not to the javascript file.</p>
             <td class="type">
             
                 
-<span class="param-type">boolean</span>
+<span class="param-type">string</span>
 
 
 
@@ -548,6 +556,12 @@ in and not to the javascript file.</p>
                 </td>
             
 
+            
+                <td class="default">
+                
+                    "BA"
+                
+                </td>
             
 
             <td class="description last"><p>The name of the cookie in which to store
@@ -565,7 +579,7 @@ the measured bandwidth and latency of the user's network connection.</p>
             <td class="type">
             
                 
-<span class="param-type">boolean</span>
+<span class="param-type">number</span>
 
 
 
@@ -585,8 +599,14 @@ the measured bandwidth and latency of the user's network connection.</p>
             
 
             
+                <td class="default">
+                
+                    604800
+                
+                </td>
+            
 
-            <td class="description last"><p>The lifetime in seconds of the bandwidth cookie.</p>
+            <td class="description last"><p>The lifetime (in seconds) of the bandwidth cookie.</p>
 <p>The default is set to 7 days. This specifies how long it will be before
 we run the bandwidth test again for a user, assuming their IP address
 doesn't change within this time.</p>
@@ -628,9 +648,14 @@ setting this cookie to a shorter value isn't the right solution.</p></td>
             
 
             
+                <td class="default">
+                
+                    15000
+                
+                </td>
+            
 
-            <td class="description last"><p>The timeout in seconds for the entire bandwidth test.</p>
-<p>The default is set to 15 seconds.</p>
+            <td class="description last"><p>The timeout (in milliseconds )for the entire bandwidth test.</p>
 <p>The bandwidth test can run for a long time, and sometimes, due to
 network errors, it might never complete. The timeout forces the test
 to complete at that time. This is a hard limit.</p>
@@ -671,9 +696,14 @@ completing before the user leaves the page.</p></td>
             
 
             
+                <td class="default">
+                
+                    5
+                
+                </td>
+            
 
             <td class="description last"><p>The number of times the bandwidth test should run.</p>
-<p>The default is set to 5.</p>
 <p>The first test is always a pilot to figure out the best way to proceed
 with the remaining tests. Increasing this number will increase the
 tests accuracy, but at the same time increases the risk that the test will timeout.</p>
@@ -710,13 +740,19 @@ tests accuracy, but at the same time increases the risk that the test will timeo
             
 
             
+                <td class="default">
+                
+                    true
+                
+                </td>
+            
 
-            <td class="description last"><p>By default, boomerang will skip the bandwidth
+            <td class="description last"><p>By default, boomerang will test bandwidth
 test over an HTTPS connection.</p>
 <p>Establishing an SSL connection takes time, which could skew the
 bandwidth results. If all your traffic is sent over SSL, then running
 the test over SSL probably gets you what you want.</p>
-<p>If you set <code>test_https</code> to <code>true</code>, boomerang will run the test instead of skipping.</p></td>
+<p>If you set <code>test_https</code> to <code>false</code>, boomerang will not test on HTTPS.</p></td>
         </tr>
 
     
@@ -748,6 +784,12 @@ the test over SSL probably gets you what you want.</p>
                 </td>
             
 
+            
+                <td class="default">
+                
+                    false
+                
+                </td>
             
 
             <td class="description last"><p>By default, the bandwidth plugin
@@ -786,6 +828,12 @@ results of the test before sending the beacon.</p></td>
                 </td>
             
 
+            
+                <td class="default">
+                
+                    ""
+                
+                </td>
             
 
             <td class="description last"><p>The user's IP address, for detecting
@@ -1077,8 +1125,8 @@ to call it yourself.</p>
 	<div class="clearfix"></div>
 
 	
-		<div class="col-md-3">
-			<div id="toc" class="col-md-3 hidden-xs hidden-sm hidden-md"></div>
+		<div class="col-md-2 col-md-offset-1">
+			<div id="toc" class="col-md-4 col-lg-2 hidden-xs hidden-sm hidden-md"></div>
 		</div>
 	
 
@@ -1110,9 +1158,9 @@ to call it yourself.</p>
 	</span>
 
 <span class="jsdoc-message">
-	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.6</a>
+	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.11</a>
 	
-		on Tue Feb 6th 2024
+		on Thu Apr 16th 2026
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>

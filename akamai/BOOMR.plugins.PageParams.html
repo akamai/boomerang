@@ -77,11 +77,11 @@
 </div>
 
 
-<div class="container" id="toc-content">
+<div class="container-fluid" id="toc-content">
 <div class="row">
 
 	
-	<div class="col-md-8">
+	<div class="col-md-8 col-md-offset-1">
 	
 		<div id="main">
 			
@@ -119,6 +119,19 @@
         <p>This plugin is responsible for handling Page Groups, A/B, Custom Timers,
 Custom Metrics and Custom Dimensions for mPulse.</p>
 <p>For information on how to include this plugin, see the <a href="tutorial-building.html">Building</a> tutorial.</p>
+<h2>Prerendering</h2>
+<p>The following Custom types are affected by Prerendering (and may have their durations reduced
+by the Activation Start time):</p>
+<ul>
+<li>UserTiming Marks</li>
+<li>UserTiming Measures</li>
+<li>ResourceTiming</li>
+</ul>
+<p>The following Custom types are NOT affected by Prerendering:</p>
+<ul>
+<li>JavaScript variables / functions: Should be updated to take Prerendering into account if desired</li>
+<li>NavigationTiming: Calculations are done on the Collector</li>
+</ul>
 <h2>Beacon Parameters</h2>
 <p>This plugin will add Page Group, A/B, Custom Timers, Metrics and Dimensions
 to the beacon.</p>
@@ -295,6 +308,8 @@ Custom Timers will be <code>custom[n]|val</code>, separated by commas.</li>
         
 
         
+        <th>Default</th>
+        
 
         <th class="last">Description</th>
     </tr>
@@ -311,7 +326,7 @@ Custom Timers will be <code>custom[n]|val</code>, separated by commas.</li>
             <td class="type">
             
                 
-<span class="param-type">object</span>
+<span class="param-type">Array.&lt;object></span>
 
 
 
@@ -330,6 +345,12 @@ Custom Timers will be <code>custom[n]|val</code>, separated by commas.</li>
                 </td>
             
 
+            
+                <td class="default">
+                
+                    []
+                
+                </td>
             
 
             <td class="description last"><p>Page groups</p></td>
@@ -345,7 +366,7 @@ Custom Timers will be <code>custom[n]|val</code>, separated by commas.</li>
             <td class="type">
             
                 
-<span class="param-type">object</span>
+<span class="param-type">Array.&lt;object></span>
 
 
 
@@ -364,6 +385,12 @@ Custom Timers will be <code>custom[n]|val</code>, separated by commas.</li>
                 </td>
             
 
+            
+                <td class="default">
+                
+                    []
+                
+                </td>
             
 
             <td class="description last"><p>A/B test variable</p></td>
@@ -379,7 +406,7 @@ Custom Timers will be <code>custom[n]|val</code>, separated by commas.</li>
             <td class="type">
             
                 
-<span class="param-type">object</span>
+<span class="param-type">Array.&lt;object></span>
 
 
 
@@ -398,6 +425,12 @@ Custom Timers will be <code>custom[n]|val</code>, separated by commas.</li>
                 </td>
             
 
+            
+                <td class="default">
+                
+                    []
+                
+                </td>
             
 
             <td class="description last"><p>Custom Timers</p></td>
@@ -413,7 +446,7 @@ Custom Timers will be <code>custom[n]|val</code>, separated by commas.</li>
             <td class="type">
             
                 
-<span class="param-type">object</span>
+<span class="param-type">Array.&lt;object></span>
 
 
 
@@ -432,6 +465,12 @@ Custom Timers will be <code>custom[n]|val</code>, separated by commas.</li>
                 </td>
             
 
+            
+                <td class="default">
+                
+                    []
+                
+                </td>
             
 
             <td class="description last"><p>Custom Metrics</p></td>
@@ -447,7 +486,7 @@ Custom Timers will be <code>custom[n]|val</code>, separated by commas.</li>
             <td class="type">
             
                 
-<span class="param-type">object</span>
+<span class="param-type">Array.&lt;object></span>
 
 
 
@@ -466,6 +505,12 @@ Custom Timers will be <code>custom[n]|val</code>, separated by commas.</li>
                 </td>
             
 
+            
+                <td class="default">
+                
+                    []
+                
+                </td>
             
 
             <td class="description last"><p>Custom Dimensions</p></td>
@@ -481,7 +526,7 @@ Custom Timers will be <code>custom[n]|val</code>, separated by commas.</li>
             <td class="type">
             
                 
-<span class="param-type">object</span>
+<span class="param-type">string</span>
 
 
 
@@ -500,6 +545,12 @@ Custom Timers will be <code>custom[n]|val</code>, separated by commas.</li>
                 </td>
             
 
+            
+                <td class="default">
+                
+                    "."
+                
+                </td>
             
 
             <td class="description last"><p>Default decimal format</p></td>
@@ -515,7 +566,7 @@ Custom Timers will be <code>custom[n]|val</code>, separated by commas.</li>
             <td class="type">
             
                 
-<span class="param-type">object</span>
+<span class="param-type">string</span>
 
 
 
@@ -534,6 +585,12 @@ Custom Timers will be <code>custom[n]|val</code>, separated by commas.</li>
                 </td>
             
 
+            
+                <td class="default">
+                
+                    ","
+                
+                </td>
             
 
             <td class="description last"><p>Default thousands format</p></td>
@@ -568,6 +625,12 @@ Custom Timers will be <code>custom[n]|val</code>, separated by commas.</li>
                 </td>
             
 
+            
+                <td class="default">
+                
+                    ""
+                
+                </td>
             
 
             <td class="description last"><p>XHR allowlist/denylist configuration
@@ -604,6 +667,12 @@ Custom Timers will be <code>custom[n]|val</code>, separated by commas.</li>
             
 
             
+                <td class="default">
+                
+                    "all"
+                
+                </td>
+            
 
             <td class="description last"><p>SPA XHR configuration (unset or <code>all</code>)</p></td>
         </tr>
@@ -638,9 +707,15 @@ Custom Timers will be <code>custom[n]|val</code>, separated by commas.</li>
             
 
             
+                <td class="default">
+                
+                    false
+                
+                </td>
+            
 
-            <td class="description last"><p>Whether or not to set the duration of UserTiming
-marks from the latest navigation (vs. from the first navigation)</p></td>
+            <td class="description last"><p>Whether or not to set
+the duration of UserTiming marks from the latest navigation (vs. from the first navigation)</p></td>
         </tr>
 
     
@@ -1514,8 +1589,8 @@ custom timers value before setting the timer with <code>HandlerConfig#customTime
 	<div class="clearfix"></div>
 
 	
-		<div class="col-md-3">
-			<div id="toc" class="col-md-3 hidden-xs hidden-sm hidden-md"></div>
+		<div class="col-md-2 col-md-offset-1">
+			<div id="toc" class="col-md-4 col-lg-2 hidden-xs hidden-sm hidden-md"></div>
 		</div>
 	
 
@@ -1547,9 +1622,9 @@ custom timers value before setting the timer with <code>HandlerConfig#customTime
 	</span>
 
 <span class="jsdoc-message">
-	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.6</a>
+	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.11</a>
 	
-		on Tue Feb 6th 2024
+		on Thu Apr 16th 2026
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>
