@@ -99,6 +99,14 @@ describe("BOOMR.utils.arrayFilter()", function() {
     assert.deepEqual(result, [undefined, "synthetic"]);
   });
 
+  it("Should ignore inherited indexes in the fallback", function() {
+    var prototype = { 0: "inherited" },
+        input = Object.create(prototype);
+
+    input.length = 1;
+    assert.deepEqual(BOOMR.utils.arrayFilter(input, function() { return true; }), []);
+  });
+
   it("Should skip entries deleted by an earlier fallback predicate call", function() {
     var input = [1, 2, 3],
         visited = [];

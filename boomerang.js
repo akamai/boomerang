@@ -2029,7 +2029,7 @@ BOOMR_check_doc_domain();
               value;
 
           while (++index < length) {
-            if (!(index in arrayObject)) {
+            if (!Object.prototype.hasOwnProperty.call(arrayObject, index)) {
               continue;
             }
 
