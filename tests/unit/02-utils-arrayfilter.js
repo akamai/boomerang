@@ -79,4 +79,58 @@ describe("BOOMR.utils.arrayFilter()", function() {
 
     assert.deepEqual(BOOMR.utils.arrayFilter(input, filterFunction), expect);
   });
+
+  it("Should skip sparse array holes in the fallback while preserving explicit undefined values", function() {
+    var input = [],
+        visited = [];
+
+    input.length = 4;
+    input[1] = undefined;
+    input[3] = "synthetic";
+    input.filter = undefined;
+
+    var result = BOOMR.utils.arrayFilter(input, function(value, index) {
+      visited.push(index);
+
+      return true;
+    });
+
+    assert.deepEqual(visited, [1, 3]);
+    assert.deepEqual(result, [undefined, "synthetic"]);
+  });
+
+  it("Should ignore inherited indexes in the fallback", function() {
+    var prototype = { 0: "inherited" },
+        input = Object.create(prototype);
+
+    input.length = 1;
+    assert.deepEqual(BOOMR.utils.arrayFilter(input, function() {
+      return true;
+    }), []);
+  });
+
+  it("Should skip entries deleted by an earlier fallback predicate call", function() {
+    var input = [1, 2, 3],
+        visited = [];
+
+    input.filter = undefined;
+
+    var result = BOOMR.utils.arrayFilter(input, function(value, index) {
+      visited.push(index);
+      delete input[1];
+
+      return true;
+    });
+
+    assert.deepEqual(visited, [0, 2]);
+    assert.deepEqual(result, [1, 3]);
+  });
+
+  it("Should still filter array-like strings in the fallback", function() {
+    var result = BOOMR.utils.arrayFilter("abc", function(value) {
+      return value !== "b";
+    });
+
+    assert.deepEqual(result, ["a", "c"]);
+  });
 });

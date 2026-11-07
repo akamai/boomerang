@@ -2025,9 +2025,14 @@ BOOMR_check_doc_domain();
         else {
           var index = -1,
               length = array.length,
+              arrayObject = Object(array),
               value;
 
           while (++index < length) {
+            if (!Object.prototype.hasOwnProperty.call(arrayObject, index)) {
+              continue;
+            }
+
             value = array[index];
 
             if (predicate(value, index, array)) {
